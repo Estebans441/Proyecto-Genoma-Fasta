@@ -17,6 +17,8 @@ int main() {
   
   //cargar test_genome.fa
   //codificar test_genome.fabin
+  //ruta_mas_corta Full_SEQUENCE 0 0 1 44
+  //base_remota Full_SEQUENCE 0 0
   
   //cargar AligSeq85678-lin.fa
   //codificar AligSeq85678-lin.fabin  
@@ -100,6 +102,39 @@ int main() {
           else 
             cout << "Secuencias decodificadas desde " << arg << " y cargadas en memoria." << endl << endl;
         }
+      }
+
+      else if(comando == "ruta_mas_corta"){
+        int ic, j, x, y;
+        i >> ic; i >> j; i >> x; i >> y;
+        list<string> lista = genoma.rutaMasCorta(arg, ic, j, x, y);
+        list<string>::iterator it = lista.begin();
+        it++;
+        cout << "\t";
+        cout << "Para la secuencia " << arg << endl;
+        cout << "\tLa ruta más corta entre la base en [" << ic << "," << j << "] y la base en [" << x << "," << y << "] es: \n\t\t";
+        for(; it != lista.end() ; it++)
+          cout << *it;
+        cout << endl << "\tEl costo total de la ruta es: " << *lista.begin() << endl << endl;
+      }
+
+      else if (comando == "base_remota"){
+        int ic, j;
+        string coordenadasRemotas;
+        i >> ic; i >> j;
+        list<string> lista = genoma.rutaBaseRemota(arg, ic, j);
+        list<string>::iterator it = lista.begin();
+        it++;
+        coordenadasRemotas = *it;
+        it++;
+        cout << "\t";
+        cout << "Para la secuencia " << arg << "," << endl;
+        cout << "\tla base remota esta ubicada en [" << coordenadasRemotas << "]," << endl;
+        cout << "\tY la ruta entre la base en ["<< ic << "," <<j<< "] y la base remota en ["<< coordenadasRemotas << "] es: \n\t\t";
+        for (; it != lista.end(); it++)
+          cout << *it;
+        it = lista.begin();
+        cout << endl << "\tEl costo total de la ruta es: "<< *it << endl << endl;        
       }
         
       else

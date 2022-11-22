@@ -255,7 +255,7 @@ public:
     list<Componente>::iterator it;
     list<Secuencia>::iterator it2;
     string codificacion = "";
-    filebuf fichero;0
+    filebuf fichero;
     bitset<8> byte;
 
     GenerarHistograma();
@@ -503,6 +503,73 @@ public:
     }
     return 1;
   }
+
+  /*
+    -------------------------------------------------------------------
+    G e n o m a : : r u t a M a s C o r t a -> l i s t < s t r i n g >
+    -------------------------------------------------------------------
+    Retorna una lista con la informacion que requiere el metodo ruta
+    mas corta, donde la primera posicion de la lista corresponde al
+    costo de la ruta y de ahi en adelante la ruta en si.
+  */
+  list<string> rutaMasCorta(string descripcion, int i , int j, int x, int y){
+    list<string> retorno;
+    vector<char> ruta;
+    float costo;
+    string aux;
+    for(list<Secuencia>::iterator it = secuencias.begin() ; it != secuencias.end() ; it++){
+      if(it->getDescripcion() == descripcion){
+        costo = it->rutaMasCorta(i,j,x,y,ruta);
+      }
+    }
+    retorno.push_back(to_string(costo));
+    for(int i = 0 ; i < ruta.size() ; i++){
+      aux = ruta[i];
+      retorno.push_back(aux);
+    }
+    return retorno;
+  }
+
+/*
+    -------------------------------------------------------------------
+    G e n o m a : : r u t a B a s e R e m o t a -> l i s t < s t r i n g >
+    -------------------------------------------------------------------
+    Retorna una lista con la informacion que requiere el metodo ruta
+    mas corta, donde la primera posicion de la lista corresponde al
+    costo de la ruta y de ahi en adelante la ruta en si.
+  */
+  list<string> rutaBaseRemota (string descripcion, int i , int j){
+    list<string> retorno;
+    vector<char> ruta;
+    
+    float costo;
+    string aux;
+    
+    int coordXRemota;
+    int coordYRemota;
+    
+    for(list<Secuencia>::iterator it = secuencias.begin() ; it != secuencias.end() ; it++){
+      if(it->getDescripcion() == descripcion){
+        costo = it->rutaMasLargaBaseRemota(i,j,coordXRemota,coordYRemota,ruta);
+      }
+    }
+    retorno.push_back(to_string(costo));
+
+    string coordenadas;
+    stringstream ss;
+    ss << coordXRemota << "," << coordYRemota;
+    coordenadas = ss.str();
+    retorno.push_back(coordenadas);
+    
+    for(int i = 0 ; i < ruta.size() ; i++){
+      aux = ruta[i];
+      retorno.push_back(aux);
+    }
+    
+    return retorno;
+  }
+
+
 
 protected:
   /*
